@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import './style.scss'
 import { auth$, login } from '../Auth'
 import Loader from '../Loader'
@@ -9,18 +9,16 @@ export default function Login(props) {
   const [error, setError] = useState()
   const serviceContext = useServiceContext()
 
-  console.log(' auth$', auth$)
-  console.log('login 123', login)
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     serviceContext.setService({ title: 'Login' })
 
     let timeout
-    const sub = auth$.subscribe(({ pending, error, ...rest }) => {
-      console.log('pending ', pending)
-      console.log('...rest  ', rest)
+    const sub = auth$.subscribe(({ pending, error, sessionToken }) => {
+      const needsLogin = !sessionToken
 
-      console.log('error ', error)
+      if (!needsLogin && window.location.pathname === '/login') {
+        window.location.replace('/')
+      }
       // redirecting to /home when logged in will be done in the navbar. Cohesive code FTW!
       setPending(pending)
       setError(error)
@@ -28,6 +26,7 @@ export default function Login(props) {
         setError()
       }, 2000)
     })
+
     return () => {
       clearInterval(timeout)
       sub.unsubscribe()
@@ -37,11 +36,14 @@ export default function Login(props) {
   const onSubmit = (e) => {
     e.preventDefault()
     const { username, password } = document.forms.login.elements
-    login(username.value, password.value)
+    login(username.value, password.value).then((user) => {
+      console.log('after login success ', user)
+      user.sessionToken && window.location.replace('/')
+    })
   }
 
   return (
-    <div>
+    <>
       <form name="login" className="login-form" onSubmit={onSubmit}>
         <label htmlFor="username">Username</label>
         <input id="username" type="text" required />
@@ -54,6 +56,6 @@ export default function Login(props) {
         </div>
         {error && <div className="login-error">{error}</div>}
       </form>
-    </div>
+    </>
   )
 }

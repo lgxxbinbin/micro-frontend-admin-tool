@@ -35,15 +35,23 @@ const GET_LOGGED_IN = (username, password) =>
     }, 2500)
   })
 
-export function login(username, password) {
+export function login(username, password, funcRedirect) {
   if (!auth$.value.pending) {
-    GET_LOGGED_IN(username, password).then((user) => {
-      auth$.next(user)
+    return new Promise((resolve, reject) => {
+      GET_LOGGED_IN(username, password)
+        .then((user) => {
+          auth$.next(user)
+          resolve(user)
+        })
+        .catch(() => {
+          reject('Login error')
+        })
     })
   }
 }
 
 export function logout() {
+  console.log('logout from auth ')
   localStorage.removeItem('sessionToken')
   auth$.next({
     sessionToken: null,

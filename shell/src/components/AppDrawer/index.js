@@ -61,7 +61,11 @@ function ListItemLink(props) {
 
   return (
     <li>
-      <ListItem selected={selected} button component={CustomLink}>
+      <ListItem
+        selected={selected ? true : false}
+        button
+        component={CustomLink}
+      >
         <ListItemIcon>{props.icon}</ListItemIcon>
         <ListItemText primary={props.text} />
       </ListItem>
@@ -72,9 +76,8 @@ function ListItemLink(props) {
 function Menu() {
   return (
     <List>
-      <ListItemLink to="dashboard" icon={<DashboardIcon />} text="Dashboard" />
-      <ListItemLink to="orders" icon={<ShoppingCartIcon />} text="Orders" />
-      <ListItemLink to="login" icon={<UserIcon />} text="Profile" />
+      <ListItemLink to="/" icon={<DashboardIcon />} text="Dashboard" />
+      <ListItemLink to="/orders" icon={<ShoppingCartIcon />} text="Orders" />
     </List>
   )
 }
