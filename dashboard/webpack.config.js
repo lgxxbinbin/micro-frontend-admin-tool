@@ -3,8 +3,8 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ModuleFederationPlugin = require('webpack').container
-  .ModuleFederationPlugin
+const ModuleFederationPlugin =
+  require('webpack').container.ModuleFederationPlugin
 
 const isProduction = process.env.NODE_ENV == 'production'
 
@@ -18,12 +18,13 @@ const config = {
   entry: './src/index.js',
   output: {
     // path: path.resolve(__dirname, 'dist'),
-    publicPath: 'auto',
-    chunkFilename: '[id].[contenthash].js',
+    // publicPath: 'auto',
+    // chunkFilename: '[id].[contenthash].js',
+    filename: 'dashboard/[id].[contenthash].js',
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, 'dashboard'),
     },
     port: 6100,
     historyApiFallback: true,
@@ -32,11 +33,12 @@ const config = {
   plugins: [
     new ModuleFederationPlugin({
       name: 'dashboard',
-      filename: 'remoteEntry.js',
+      filename: 'dashboard/remoteEntry.js',
       remotes: {
-        '@order': 'order@http://localhost:6200/remoteEntry.js',
-        '@dashboard': 'dashboard@http://localhost:6100/remoteEntry.js',
-        '@shell': 'shell@http://localhost:6001/remoteEntry.js',
+        '@order': `order@http://localhost:3000/order/remoteEntry.js`,
+        '@dashboard':
+          'dashboard@http://localhost:3000/dashboard/remoteEntry.js',
+        '@shell': 'shell@http://localhost:6001/shell/remoteEntry.js',
       },
       exposes: {
         './DashboardService': './src/pages/DashboardPage',

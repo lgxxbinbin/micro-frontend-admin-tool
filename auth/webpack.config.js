@@ -17,12 +17,13 @@ const deps = require('./package.json').dependencies
 const config = {
   entry: './src/index.js',
   output: {
-    publicPath: 'auto',
-    chunkFilename: '[id].[contenthash].js',
+    // publicPath: 'auto',
+    // chunkFilename: '[id].[contenthash].js',
+    filename: 'auth/[id].[contenthash].js',
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, 'auth'),
     },
     port: 6300,
     historyApiFallback: true,
@@ -31,9 +32,9 @@ const config = {
   plugins: [
     new ModuleFederationPlugin({
       name: 'auth',
-      filename: 'remoteEntry.js',
+      filename: 'auth/remoteEntry.js',
       remotes: {
-        '@shell': 'shell@http://localhost:6001/remoteEntry.js',
+        '@shell': 'shell@http://localhost:6001/shell/remoteEntry.js',
       },
       exposes: {
         './Auth': './src/components/Auth',

@@ -16,13 +16,13 @@ const deps = require('./package.json').dependencies
 const config = {
   entry: './src/index.js',
   output: {
-    // path: path.resolve(__dirname, 'dist'),
-    publicPath: 'auto',
-    chunkFilename: '[id].[contenthash].js',
+    // publicPath: 'auto',
+    // chunkFilename: '[id].[contenthash].js',
+    filename: 'order/[id].[contenthash].js',
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, 'order'),
     },
     port: 6200,
     historyApiFallback: true,
@@ -31,9 +31,9 @@ const config = {
   plugins: [
     new ModuleFederationPlugin({
       name: 'order',
-      filename: 'remoteEntry.js',
+      filename: 'order/remoteEntry.js',
       remotes: {
-        '@shell': 'shell@http://localhost:6001/remoteEntry.js',
+        '@shell': 'shell@http://localhost:6001/shell/remoteEntry.js',
       },
       exposes: {
         './RecentOrdersWidget': './src/components/RecentOrdersWidget',

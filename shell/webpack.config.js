@@ -15,12 +15,16 @@ const stylesHandler = isProduction
 
 const deps = require('./package.json').dependencies
 
+const OUTPUT_DIR = path.resolve(__dirname, 'docs')
+
 const config = {
   entry: './src/index.js',
   output: {
     // path: path.resolve(__dirname, 'dist'),
-    publicPath: 'auto',
-    chunkFilename: '[id].[contenthash].js',
+    // publicPath: 'auto',
+    // chunkFilename: '[id].[contenthash].js',
+    path: OUTPUT_DIR,
+    filename: 'shell/[id].[contenthash].js',
   },
   resolve: {
     extensions: ['.js', '.mjs', '.jsx', '.css'],
@@ -30,7 +34,7 @@ const config = {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, 'shell'),
     },
     hot: 'only',
     historyApiFallback: true,
@@ -75,12 +79,13 @@ const config = {
   plugins: [
     new ModuleFederationPlugin({
       name: 'shell',
-      filename: 'remoteEntry.js',
+      filename: 'shell/remoteEntry.js',
       remotes: {
-        '@auth': 'auth@http://localhost:6300/removeEntry.js',
-        '@order': 'order@http://localhost:6200/remoteEntry.js',
-        '@dashboard': 'dashboard@http://localhost:6100/remoteEntry.js',
-        '@shell': 'shell@http://localhost:6001/remoteEntry.js',
+        '@auth': 'auth@http://localhost:3000/auth/remoteEntry.js',
+        '@order': 'order@http://localhost:3000/order/remoteEntry.js',
+        '@dashboard':
+          'dashboard@http://localhost:3000/dashboard/remoteEntry.js',
+        '@shell': 'shell@http://localhost:6001/shell/remoteEntry.js',
       },
       exposes: {
         './Shell': './src/components/Shell',
