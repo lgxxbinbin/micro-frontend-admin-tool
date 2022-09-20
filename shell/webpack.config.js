@@ -85,7 +85,7 @@ const config = {
         '@order': 'order@http://localhost:3000/order/remoteEntry.js',
         '@dashboard':
           'dashboard@http://localhost:3000/dashboard/remoteEntry.js',
-        '@shell': 'shell@http://localhost:6001/shell/remoteEntry.js',
+        '@shell': 'shell@http://localhost:3000/shell/remoteEntry.js',
       },
       exposes: {
         './Shell': './src/components/Shell',

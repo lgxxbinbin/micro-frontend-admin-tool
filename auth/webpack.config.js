@@ -34,7 +34,7 @@ const config = {
       name: 'auth',
       filename: 'auth/remoteEntry.js',
       remotes: {
-        '@shell': 'shell@http://localhost:6001/shell/remoteEntry.js',
+        '@shell': 'shell@http://localhost:3000/shell/remoteEntry.js',
       },
       exposes: {
         './Auth': './src/components/Auth',

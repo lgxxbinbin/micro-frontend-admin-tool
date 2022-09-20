@@ -33,7 +33,7 @@ const config = {
       name: 'order',
       filename: 'order/remoteEntry.js',
       remotes: {
-        '@shell': 'shell@http://localhost:6001/shell/remoteEntry.js',
+        '@shell': 'shell@http://localhost:3000/shell/remoteEntry.js',
       },
       exposes: {
         './RecentOrdersWidget': './src/components/RecentOrdersWidget',
