@@ -1,24 +1,11 @@
 {
-  "name": "my-webpack-project",
-  "private": true,
+  "name": "@micro-admin-tools-1/dashboard",
   "version": "1.0.0",
   "scripts": {
     "start": "webpack-cli serve",
-    "build": "webpack --mode=production --node-env=production",
-    "serve": "webpack serve",
-    "clean": "rm -rf dist",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch"
-  },
-  "dependencies": {
-    "@material-ui/core": "^4.9.10",
-    "@material-ui/icons": "^4.9.1",
-    "history": "^5.0.0",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-router": "6.3.0",
-    "react-router-dom": "6.3.0"
+    "build": "webpack --mode production",
+    "serve": "serve dist -p 3001",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
@@ -41,7 +28,17 @@
     "style-loader": "^3.3.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.11.0",
-    "workbox-webpack-plugin": "^6.5.4"
+    "webpack-dev-server": "^4.11.0"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.9.1",
+    "events": "^3.1.0",
+    "history": "^5.0.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-router": "6.3.0",
+    "react-router-dom": "6.3.0",
+    "recharts": "1.8.5"
   }
 }

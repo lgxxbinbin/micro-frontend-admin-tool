@@ -6,11 +6,11 @@ This example demos a basic host application loading remote component.
 - `dashboard` - standalone application
 - `order` - standalone application
 - `sales` - standalone application
-- `profile` - standalone application
 
 # Running Demo
 
 Run the following commands:
+
 1. `nvm use`
 2. `yarn lerna bootstrap --npm-client yarn`
 3. `yarn build`

@@ -44,7 +44,6 @@ const config = {
         react: {
           singleton: true,
           eager: true,
-
           requiredVersion: deps.react,
         },
         'react-dom': {

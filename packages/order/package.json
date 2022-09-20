@@ -1,5 +1,5 @@
 {
-  "name": "my-webpack-project",
+  "name": "@micro-admin-tools-1/order",
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
