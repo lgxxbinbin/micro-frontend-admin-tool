@@ -95,17 +95,14 @@ const config = {
         {
           react: {
             singleton: true,
-            eager: true,
             requiredVersion: deps.react,
           },
           'react-dom': {
             singleton: true,
-            eager: true,
             requiredVersion: deps['react-dom'],
           },
           '@material-ui/core': {
             singleton: true,
-            eager: true,
             requiredVersion: deps['@material-ui/core'],
           },
         },
