@@ -13,3 +13,9 @@ yarn build
 ```
 
 to bundle your application
+
+install submodule
+
+git submodule add https://github.com/lgxxbinbin/template-react-component-library nova-ui-kit
+
+yarn add file:nova-ui-kit

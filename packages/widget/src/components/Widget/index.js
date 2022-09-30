@@ -1,5 +1,7 @@
 import React from 'react'
 import { Typography } from '@material-ui/core'
+// import { Button } from '@lgxxbinbin/template-react-component-library'
+// import { Button } from 'nova-ui-kit-2'
 
 export default function Widget() {
   return (
@@ -7,6 +9,7 @@ export default function Widget() {
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
         App widget
       </Typography>
+      <Button label="test" />
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam blandit
         est a vehicula pellentesque. Nunc vitae pulvinar est, sed ultricies
