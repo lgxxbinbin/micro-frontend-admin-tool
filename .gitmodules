@@ -1,6 +1,0 @@
-[submodule "packages/widget/nova-ui-kit-2"]
-	path = packages/widget/nova-ui-kit-2
-	url = https://github.com/lgxxbinbin/template-react-component-library
-[submodule "packages/widget/nova-ui-kit"]
-	path = packages/widget/nova-ui-kit
-	url = https://github.com/lgxxbinbin/template-react-component-library
