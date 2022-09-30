@@ -106,7 +106,6 @@ const config = {
             requiredVersion: deps['@material-ui/core'],
           },
         },
-        // Workaround explaination: https://www.youtube.com/watch?v=-LNcpralkjM&t=540
         './src/context/ServiceContext',
       ],
     }),

@@ -5,6 +5,8 @@ import BaseLayout from '../BaseLayout'
 import Viewport from './Viewport'
 import { useLocalStorageSync } from '../../hooks/useLocalStorageSync'
 import { ServiceProvider } from './../../context/ServiceContext'
+import { ErrorBoundary } from 'react-error-boundary'
+import './style.scss'
 
 const DashboardService = React.lazy(() => import('@dashboard/DashboardService'))
 const OrderService = React.lazy(() => import('@order/OrderService'))
@@ -26,6 +28,22 @@ function useDrawer() {
   }
 }
 
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <div className="alert-container" role="alert-container">
+      <p>Something went wrong:</p>
+      <pre>{error.message}</pre>
+      <button
+        onClick={() => {
+          window.location.reload()
+        }}
+      >
+        Try again
+      </button>
+    </div>
+  )
+}
+
 export default function Shell() {
   const drawer = useDrawer()
 
@@ -36,35 +54,56 @@ export default function Shell() {
   }, [])
 
   return (
-    <ServiceProvider>
-      <BrowserRouter>
-        <Viewport>
-          <Box display="flex" flex={1}>
-            <React.Suspense fallback={'Loading'}>
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <BaseLayout>
-                      <DashboardService />
-                    </BaseLayout>
-                  }
-                />
-                <Route
-                  path="/orders"
-                  element={
-                    <BaseLayout>
-                      <OrderService />
-                    </BaseLayout>
-                  }
-                />
-                <Route path="/login" element={<Login />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </React.Suspense>
-          </Box>
-        </Viewport>
-      </BrowserRouter>
-    </ServiceProvider>
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onReset={() => {
+        // reset the state of your app so the error doesn't happen again
+      }}
+    >
+      <ServiceProvider>
+        <BrowserRouter>
+          <Viewport>
+            <Box display="flex" flex={1}>
+              <React.Suspense fallback={'Loading....'}>
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <BaseLayout>
+                        <ErrorBoundary
+                          FallbackComponent={ErrorFallback}
+                          onReset={() => {
+                            // reset the state of your app so the error doesn't happen again
+                          }}
+                        >
+                          <DashboardService />
+                        </ErrorBoundary>
+                      </BaseLayout>
+                    }
+                  />
+                  <Route
+                    path="/orders"
+                    element={
+                      <BaseLayout>
+                        <ErrorBoundary
+                          FallbackComponent={ErrorFallback}
+                          onReset={() => {
+                            // reset the state of your app so the error doesn't happen again
+                          }}
+                        >
+                          <OrderService />
+                        </ErrorBoundary>
+                      </BaseLayout>
+                    }
+                  />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </React.Suspense>
+            </Box>
+          </Viewport>
+        </BrowserRouter>
+      </ServiceProvider>
+    </ErrorBoundary>
   )
 }

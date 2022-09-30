@@ -8,7 +8,7 @@ const RecentOrders = React.lazy(() => import('@order/RecentOrdersWidget'))
 // const SalesToday = React.lazy(() => import('sales/TodayWidget'));
 
 const RecentOrderWidget = () => (
-  <Widget height="500px">
+  <Widget>
     <RecentOrders />
   </Widget>
 )

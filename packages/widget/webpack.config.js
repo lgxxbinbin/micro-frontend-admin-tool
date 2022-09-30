@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ModuleFederationPlugin =
   require('webpack').container.ModuleFederationPlugin
-
 const isProduction = process.env.NODE_ENV == 'production'
 
 const stylesHandler = isProduction
@@ -17,32 +16,25 @@ const deps = require('./package.json').dependencies
 const config = {
   entry: './src/index.js',
   output: {
-    // path: path.resolve(__dirname, 'dist'),
-    // publicPath: 'auto',
-    // chunkFilename: '[id].[contenthash].js',
-    filename: 'dashboard/[id].[contenthash].js',
+    filename: 'widget/[id].[contenthash].js',
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dashboard'),
+      directory: path.join(__dirname, 'widget'),
     },
-    port: 6100,
+    port: 6400,
     historyApiFallback: true,
     hot: 'only',
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'dashboard',
-      filename: 'dashboard/remoteEntry.js',
+      name: 'widget',
+      filename: 'widget/remoteEntry.js',
       remotes: {
-        '@order': `order@http://localhost:3000/order/remoteEntry.js`,
-        // '@auth': `auth@http://localhost:3000/auth/remoteEntry.js`,
-        // '@dashboard':
-        //   'dashboard@http://localhost:3000/dashboard/remoteEntry.js',
         '@shell': 'shell@http://localhost:3000/shell/remoteEntry.js',
       },
       exposes: {
-        './DashboardService': './src/pages/DashboardPage',
+        './Widget': './src/components/Widget',
       },
       shared: {
         react: {
@@ -63,9 +55,6 @@ const config = {
       template: './public/index.html',
       publicPath: '/',
     }),
-
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
   module: {
     rules: [
@@ -85,9 +74,6 @@ const config = {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: 'asset',
       },
-
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
 }

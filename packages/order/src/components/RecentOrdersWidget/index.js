@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core'
 import { orders } from './data'
 
+import { useFederatedComponent } from './../../hooks/useFederatedComponent'
+
 function Title() {
   return (
     <Typography component="h2" variant="h6" color="primary" gutterBottom>
@@ -32,6 +34,22 @@ function OrderRow(props) {
 }
 
 export default function RecentOrdersWidget() {
+  const [{ module, scope, url }, setSystem] = React.useState({})
+
+  function setApp2() {
+    setSystem({
+      url: 'http://localhost:6400/widget/remoteEntry.js',
+      scope: 'widget',
+      module: './Widget',
+    })
+  }
+
+  const { Component: FederatedComponent, errorLoading } = useFederatedComponent(
+    url,
+    scope,
+    module
+  )
+  console.log('FederatedComponent ', FederatedComponent)
   return (
     <Box display="flex" flexDirection="column" flex={1}>
       <Title />
@@ -54,8 +72,18 @@ export default function RecentOrdersWidget() {
         </Table>
       </Box>
       <Box mt={3}>
-        <Button color="primary">See more orders</Button>
+        <Button color="primary" onClick={setApp2}>
+          Open widget
+        </Button>
       </Box>
+
+      <div style={{ marginTop: '2em' }}>
+        <React.Suspense fallback="Loading System">
+          {errorLoading
+            ? `Error loading module "${module}"`
+            : FederatedComponent && <FederatedComponent />}
+        </React.Suspense>
+      </div>
     </Box>
   )
 }
