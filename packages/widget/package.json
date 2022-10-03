@@ -34,11 +34,13 @@
     "watch": "webpack --watch"
   },
   "dependencies": {
+    "nova-ui-kit": "file:nova-ui-kit",
     "@material-ui/core": "^4.9.10",
     "history": "^5.0.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-router": "^5.1.2"
+    "react-router": "^5.1.2",
+    "styled-components": "^5.3.6"
   },
   "description": "My webpack project"
 }

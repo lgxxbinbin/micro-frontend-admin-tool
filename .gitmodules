@@ -1,0 +1,3 @@
+[submodule "packages/widget/nova-ui-kit"]
+	path = packages/widget/nova-ui-kit
+	url = https://github.com/lgxxbinbin/template-react-component-library
