@@ -3,8 +3,38 @@ import './style.scss'
 import { auth$, login } from '../Auth'
 import Loader from '../Loader'
 import { useServiceContext } from '@shell/ServiceContext'
+import TextField from '@material-ui/core/TextField'
+import {
+  createStyles,
+  makeStyles,
+  ThemeProvider,
+  createTheme,
+} from '@material-ui/core/styles'
+import { green } from '@material-ui/core/colors'
 
-export default function Login(props) {
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      alignItems: 'flex-end',
+
+      '& .MuiTextField-root': {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        width: '100%',
+      },
+    },
+  })
+)
+
+function Login(props) {
+  const classes = useStyles()
+
+  const theme = createTheme({
+    palette: {
+      primary: green,
+    },
+  })
+
   const [pending, setPending] = useState(false)
   const [error, setError] = useState()
   const serviceContext = useServiceContext()
@@ -43,12 +73,38 @@ export default function Login(props) {
   }
 
   return (
-    <>
-      <form name="login" className="login-form" onSubmit={onSubmit}>
-        <label htmlFor="username">Username</label>
-        <input id="username" type="text" required />
-        <label htmlFor="password">Password</label>
-        <input id="password" type="password" required />
+    <div className="container">
+      <form
+        name="login"
+        className={`login-form ${classes.root}`}
+        onSubmit={onSubmit}
+      >
+        <ThemeProvider theme={theme}>
+          <TextField
+            id="username"
+            required
+            label="Username"
+            variant="outlined"
+          />
+
+          <TextField
+            required
+            id="password"
+            type="password"
+            label="Password"
+            variant="outlined"
+          />
+        </ThemeProvider>
+
+        {/* <label htmlFor="username">Username</label> */}
+        {/* <input id="username" className="custom-input" type="text" required /> */}
+        {/* <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          className="custom-input"
+          type="password"
+          required
+        /> */}
         <div>
           <button type="submit" className="submit" disabled={pending}>
             {pending ? <Loader /> : 'Submit'}
@@ -56,6 +112,8 @@ export default function Login(props) {
         </div>
         {error && <div className="login-error">{error}</div>}
       </form>
-    </>
+    </div>
   )
 }
+
+export default Login
