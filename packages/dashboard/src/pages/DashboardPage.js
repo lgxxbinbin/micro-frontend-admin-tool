@@ -1,11 +1,15 @@
-import { Container, Grid, makeStyles } from '@material-ui/core'
+import { Container, Grid, makeStyles, Button } from '@material-ui/core'
 import React from 'react'
 import Widget from './../components/Widget'
 import { useServiceContext } from '@shell/ServiceContext'
+import ButtonStyle from './style'
+import './test.style.scss'
+import './abc.css'
 
 const RecentOrders = React.lazy(() => import('@order/RecentOrdersWidget'))
 // const SalesDeposits = React.lazy(() => import('sales/DepositsWidget'));
 // const SalesToday = React.lazy(() => import('sales/TodayWidget'));
+import { useBearStore } from '@store/StoreService'
 
 const RecentOrderWidget = () => (
   <Widget>
@@ -39,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Dashboard() {
+  const bears = useBearStore((state) => state.bears)
+  const increaseBears = useBearStore((state) => state.increaseBears)
+  const removeAllBears = useBearStore((state) => state.removeAllBears)
+
   const classes = useStyles()
   const serviceContext = useServiceContext()
   React.useEffect(() => {
@@ -58,6 +66,19 @@ export default function Dashboard() {
           </Grid> */}
           <Grid item xs={12}>
             <RecentOrderWidget />
+
+            <br />
+            <br />
+            <h1>We have {bears} candy</h1>
+
+            <Button variant="outlined" color="primary" onClick={increaseBears}>
+              one up
+            </Button>
+            <Button variant="outlined" color="primary" onClick={removeAllBears}>
+              clear
+            </Button>
+            {/* <ButtonStyle>test 2</ButtonStyle>
+            <div className="test">Test </div> */}
           </Grid>
         </Grid>
       </Container>

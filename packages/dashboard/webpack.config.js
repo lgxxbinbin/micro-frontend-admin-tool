@@ -36,9 +36,9 @@ const config = {
       filename: 'dashboard/remoteEntry.js',
       remotes: {
         '@order': `order@http://localhost:3000/order/remoteEntry.js`,
-        // '@auth': `auth@http://localhost:3000/auth/remoteEntry.js`,
-        // '@dashboard':
-        //   'dashboard@http://localhost:3000/dashboard/remoteEntry.js',
+
+        '@store': 'store@http://localhost:3000/store/remoteEntry.js',
+
         '@shell': 'shell@http://localhost:3000/shell/remoteEntry.js',
       },
       exposes: {

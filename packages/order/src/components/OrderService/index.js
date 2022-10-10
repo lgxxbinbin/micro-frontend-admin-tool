@@ -1,3 +1,5 @@
+import './abc.css'
+
 import {
   Container,
   Grid,
@@ -9,10 +11,15 @@ import {
   TableRow,
   Typography,
   Paper,
+  Button,
 } from '@material-ui/core'
+
 import React from 'react'
 import { orders } from './../RecentOrdersWidget/data'
 import { useServiceContext } from '@shell/ServiceContext'
+// import ButtonStyle from './style'
+
+import { useBearStore } from '@store/StoreService'
 
 function preventDefault(event) {
   event.preventDefault()
@@ -58,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function OrderService() {
+  const bears = useBearStore((state) => state.bears)
+  const increaseBears = useBearStore((state) => state.increaseBears)
+
   const classes = useStyles()
   const serviceContext = useServiceContext()
   React.useEffect(() => {
@@ -93,6 +103,16 @@ export default function OrderService() {
                 ))}
               </TableBody>
             </Table>
+
+            <br />
+            <br />
+            <h1>We have {bears} candy</h1>
+
+            <Button variant="outlined" color="primary" onClick={increaseBears}>
+              one up
+            </Button>
+            {/* <ButtonStyle>test</ButtonStyle> */}
+            {/* <div className="test">New com</div> */}
           </Paper>
         </Grid>
       </Container>

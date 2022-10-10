@@ -3,78 +3,74 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
+
 const ModuleFederationPlugin =
   require('webpack').container.ModuleFederationPlugin
+
 const isProduction = process.env.NODE_ENV == 'production'
 
-const stylesHandler = isProduction
-  ? MiniCssExtractPlugin.loader
-  : 'style-loader'
+const stylesHandler = MiniCssExtractPlugin.loader
 
+const prod = process.env.NODE_ENV === 'production'
 const deps = require('./package.json').dependencies
 
 const config = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
-    // publicPath: 'auto',
-    // chunkFilename: '[id].[contenthash].js',
-    filename: 'order/[id].[contenthash].js',
+    filename: 'store/[id].[contenthash].js',
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'order'),
+      directory: path.join(__dirname, 'store'),
     },
-    port: 6200,
+    port: 6500,
     historyApiFallback: true,
     hot: 'only',
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'order',
-      filename: 'order/remoteEntry.js',
-      remotes: {
-        '@shell': 'shell@http://localhost:3000/shell/remoteEntry.js',
-        '@store': 'store@http://localhost:3000/store/remoteEntry.js',
-      },
+      name: 'store',
+      filename: 'store/remoteEntry.js',
       exposes: {
-        './RecentOrdersWidget': './src/components/RecentOrdersWidget',
-        './OrderService': './src/components/OrderService',
+        './StoreService': './src/stores/index.ts',
       },
-      shared: {
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
+      shared: [
+        {
+          react: {
+            singleton: true,
+            eager: true,
+            requiredVersion: deps.react,
+          },
+          'react-dom': {
+            singleton: true,
+            eager: true,
+            requiredVersion: deps['react-dom'],
+          },
         },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: deps['react-dom'],
-        },
-        '@material-ui/core': {
-          singleton: true,
-          requiredVersion: deps['@material-ui/core'],
-        },
-      },
+      ],
     }),
+
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: 'public/index.html',
       publicPath: '/',
     }),
+
+    new MiniCssExtractPlugin(),
 
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
+  devtool: prod ? undefined : 'source-map', // sourcemap not for production
   module: {
     rules: [
       {
-        test: /\.m?js$/,
-        type: 'javascript/auto',
+        test: /\.(ts|tsx)$/i,
+        loader: 'ts-loader',
+        exclude: ['/node_modules/'],
         resolve: {
-          fullySpecified: false,
+          extensions: ['.ts', '.tsx', '.js', '.json'],
         },
-      },
-      {
-        test: /\.(js|jsx)$/i,
-        loader: 'babel-loader',
       },
       {
         test: /\.s[ac]ss$/i,
@@ -99,7 +95,7 @@ module.exports = () => {
   if (isProduction) {
     config.mode = 'production'
 
-    config.plugins.push(new MiniCssExtractPlugin())
+    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW())
   } else {
     config.mode = 'development'
   }

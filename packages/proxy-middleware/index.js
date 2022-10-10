@@ -6,6 +6,13 @@ const { createProxyMiddleware } = require('http-proxy-middleware')
 const app = express()
 
 app.use(
+  '/store',
+  createProxyMiddleware({
+    target: 'http://localhost:6500',
+  })
+)
+
+app.use(
   '/widget',
   createProxyMiddleware({
     target: 'http://localhost:6400',
