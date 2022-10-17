@@ -81,7 +81,8 @@ const config = {
       name: 'shell',
       filename: 'shell/remoteEntry.js',
       remotes: {
-        '@auth': 'auth@http://localhost:3000/auth/remoteEntry.js',
+        // '@auth': 'auth@http://localhost:3000/auth/remoteEntry.js',
+
         '@order': 'order@http://localhost:3000/order/remoteEntry.js',
         '@dashboard':
           'dashboard@http://localhost:3000/dashboard/remoteEntry.js',
@@ -89,6 +90,28 @@ const config = {
         '@store': 'store@http://localhost:3000/store/remoteEntry.js',
 
         '@shell': 'shell@http://localhost:3000/shell/remoteEntry.js',
+        repoAuth: `promise new Promise(resolve => {
+          const urlParams = new URLSearchParams(window.location.search)
+
+          const remoteUrlWithVersion = 'http://localhost:3000/auth/remoteEntry.js'
+          const script = document.createElement('script')
+          script.src = remoteUrlWithVersion
+          script.onload = () => {
+            const proxy = {
+              get: (request) => window.repoAuth.get(request),
+              init: (arg) => {
+                try {
+                  return window.repoAuth.init(arg)
+                } catch(e) {
+                  console.log('remote container already initialized')
+                }
+              }
+            }
+            resolve(proxy)
+          }
+          document.head.appendChild(script);
+        })
+        `,
       },
       exposes: {
         './Shell': './src/components/Shell',

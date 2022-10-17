@@ -11,7 +11,7 @@ import clsx from 'clsx'
 import { useServiceContext } from './../../context/ServiceContext'
 import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick'
 import './style.scss'
-import { logout, auth$ } from '@auth/Auth'
+import { logout, auth$ } from 'repoAuth/Auth'
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {

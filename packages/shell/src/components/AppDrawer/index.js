@@ -20,7 +20,7 @@ import clsx from 'clsx'
 import { Link, useMatch } from 'react-router-dom'
 import ButtonStyle from './style'
 
-import { auth$ } from '@auth/Auth'
+import { auth$ } from 'repoAuth/Auth'
 
 const useStyles = makeStyles((theme) => ({
   toolbarIcon: {

@@ -11,9 +11,9 @@ import Iframe from '../Iframe'
 
 const DashboardService = React.lazy(() => import('@dashboard/DashboardService'))
 const OrderService = React.lazy(() => import('@order/OrderService'))
-const Login = React.lazy(() => import('@auth/Login'))
+const Login = React.lazy(() => import('repoAuth/Login'))
 
-import { auth$ } from '@auth/Auth'
+import { auth$ } from 'repoAuth/Auth'
 
 function useDrawer() {
   const { value, setItem } = useLocalStorageSync('admin-tools/appdrawer/open')

@@ -6,9 +6,10 @@ import ButtonStyle from './style'
 import './test.style.scss'
 import './abc.css'
 
-const RecentOrders = React.lazy(() => import('@order/RecentOrdersWidget'))
-// const SalesDeposits = React.lazy(() => import('sales/DepositsWidget'));
-// const SalesToday = React.lazy(() => import('sales/TodayWidget'));
+import RecentOrders from '../components/RecentOrdersWidget'
+
+// const RecentOrders = React.lazy(() => import('@order/RecentOrdersWidget'))
+
 import { useBearStore } from '@store/StoreService'
 
 const RecentOrderWidget = () => (
