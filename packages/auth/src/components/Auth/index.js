@@ -17,7 +17,23 @@ const GET_LOGGED_IN = (username, password) =>
     })
     setTimeout(() => {
       if (username === 'admin' && password === '123') {
-        const sessionToken = 'abc123def456'
+        const sessionToken = 'admin123'
+        localStorage.setItem('sessionToken', sessionToken)
+        resolve({
+          sessionToken,
+          error: false,
+          pending: false,
+        })
+      } else if (username === 'dev' && password === '123') {
+        const sessionToken = 'dev123'
+        localStorage.setItem('sessionToken', sessionToken)
+        resolve({
+          sessionToken,
+          error: false,
+          pending: false,
+        })
+      } else if (username === 'user' && password === '123') {
+        const sessionToken = 'user123'
         localStorage.setItem('sessionToken', sessionToken)
         resolve({
           sessionToken,

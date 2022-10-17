@@ -7,6 +7,7 @@ import { useLocalStorageSync } from '../../hooks/useLocalStorageSync'
 import { ServiceProvider } from './../../context/ServiceContext'
 import { ErrorBoundary } from 'react-error-boundary'
 import './style.scss'
+import Iframe from '../Iframe'
 
 const DashboardService = React.lazy(() => import('@dashboard/DashboardService'))
 const OrderService = React.lazy(() => import('@order/OrderService'))
@@ -46,6 +47,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 
 export default function Shell() {
   const drawer = useDrawer()
+  // const navigate = useNavigate()
 
   useEffect(() => {
     console.log('auth$ ', auth$)
@@ -84,7 +86,7 @@ export default function Shell() {
                   <Route
                     path="/orders"
                     element={
-                      <BaseLayout>
+                      <BaseLayout abilities={['admin123', 'dev123']}>
                         <ErrorBoundary
                           FallbackComponent={ErrorFallback}
                           onReset={() => {
@@ -92,6 +94,16 @@ export default function Shell() {
                           }}
                         >
                           <OrderService />
+                        </ErrorBoundary>
+                      </BaseLayout>
+                    }
+                  />
+                  <Route
+                    path="/nova"
+                    element={
+                      <BaseLayout abilities={['admin123']}>
+                        <ErrorBoundary FallbackComponent={ErrorFallback}>
+                          <Iframe />
                         </ErrorBoundary>
                       </BaseLayout>
                     }

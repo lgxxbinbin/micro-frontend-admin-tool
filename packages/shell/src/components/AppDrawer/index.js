@@ -20,6 +20,8 @@ import clsx from 'clsx'
 import { Link, useMatch } from 'react-router-dom'
 import ButtonStyle from './style'
 
+import { auth$ } from '@auth/Auth'
+
 const useStyles = makeStyles((theme) => ({
   toolbarIcon: {
     display: 'flex',
@@ -75,13 +77,45 @@ function ListItemLink(props) {
 }
 
 function Menu() {
-  return (
-    <List>
-      <ListItemLink to="/" icon={<DashboardIcon />} text="Dashboard" />
-      <ListItemLink to="/orders" icon={<ShoppingCartIcon />} text="Orders" />
-      {/* <ButtonStyle>hello</ButtonStyle> */}
-    </List>
-  )
+  const token = auth$._value.sessionToken
+  let menuJSX = null
+  switch (token) {
+    case 'admin123':
+      menuJSX = (
+        <List>
+          <ListItemLink to="/" icon={<DashboardIcon />} text="Dashboard" />
+          <ListItemLink
+            to="/orders"
+            icon={<ShoppingCartIcon />}
+            text="Orders"
+          />
+          <ListItemLink to="/nova" icon={<UserIcon />} text="Novagroup" />
+          {/* <ButtonStyle>hello</ButtonStyle> */}
+        </List>
+      )
+      break
+    case 'dev123':
+      menuJSX = (
+        <List>
+          <ListItemLink to="/" icon={<DashboardIcon />} text="Dashboard" />
+          <ListItemLink
+            to="/orders"
+            icon={<ShoppingCartIcon />}
+            text="Orders"
+          />
+        </List>
+      )
+      break
+    default:
+      menuJSX = (
+        <List>
+          <ListItemLink to="/" icon={<DashboardIcon />} text="Dashboard" />
+        </List>
+      )
+      break
+  }
+
+  return menuJSX
 }
 
 export default function AppDrawer(props) {

@@ -1,5 +1,5 @@
 {
-  "name": "@micro-admin-tools-1/proxy-middleware",
+  "name": "@micro-admin-tools-/proxy-middleware",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {

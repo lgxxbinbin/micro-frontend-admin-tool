@@ -77,6 +77,7 @@ export default function Dashboard() {
             <Button variant="outlined" color="primary" onClick={removeAllBears}>
               clear
             </Button>
+            {/* <iframe src="https://platform.twitter.com/widgets/tweet_button.html"></iframe> */}
             {/* <ButtonStyle>test 2</ButtonStyle>
             <div className="test">Test </div> */}
           </Grid>
