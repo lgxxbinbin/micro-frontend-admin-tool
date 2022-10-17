@@ -11,7 +11,7 @@ import clsx from 'clsx'
 import { useServiceContext } from './../../context/ServiceContext'
 import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick'
 import './style.scss'
-import { logout } from '@auth/Auth'
+import { logout, auth$ } from '@auth/Auth'
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -51,6 +51,22 @@ export default function AppBar(props) {
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
   const onClick = () => setIsActive(!isActive)
 
+  const renderName = () => {
+    const token = auth$._value.sessionToken
+    let nameUser = 'User'
+
+    switch (token) {
+      case 'admin123':
+        nameUser = 'Admin'
+        break
+      case 'dev123':
+        nameUser = 'Dev'
+        break
+    }
+
+    return nameUser
+  }
+
   return (
     <MuiAppBar
       position="absolute"
@@ -85,7 +101,7 @@ export default function AppBar(props) {
               src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/df/df7789f313571604c0e4fb82154f7ee93d9989c6.jpg"
               alt="User avatar"
             />
-            <span>Dev</span>
+            <span>{renderName()}</span>
           </button>
           <nav
             ref={dropdownRef}
