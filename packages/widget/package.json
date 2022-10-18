@@ -31,7 +31,8 @@
     "clean": "rm -rf dist",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "setup": "yarn"
   },
   "dependencies": {
     "nova-ui-kit": "file:nova-ui-kit",
@@ -41,6 +42,5 @@
     "react-dom": "^16.13.0",
     "react-router": "^5.1.2",
     "styled-components": "^5.3.6"
-  },
-  "description": "My webpack project"
+  }
 }

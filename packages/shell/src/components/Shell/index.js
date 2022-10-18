@@ -1,67 +1,21 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Box } from '@material-ui/core'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import BaseLayout from '../BaseLayout'
 import Viewport from './Viewport'
-import { useLocalStorageSync } from '../../hooks/useLocalStorageSync'
 import { ServiceProvider } from './../../context/ServiceContext'
+import { ErrorFallback } from '../ErrorFallback'
 import { ErrorBoundary } from 'react-error-boundary'
 import './style.scss'
 import Iframe from '../Iframe'
 
 const DashboardService = React.lazy(() => import('@dashboard/DashboardService'))
 const OrderService = React.lazy(() => import('@order/OrderService'))
-const Login = React.lazy(() => import('repoAuth/Login'))
-
-import { auth$ } from 'repoAuth/Auth'
-
-function useDrawer() {
-  const { value, setItem } = useLocalStorageSync('admin-tools/appdrawer/open')
-
-  return {
-    open: value,
-    closeDrawer() {
-      setItem(false)
-    },
-    openDrawer() {
-      setItem(true)
-    },
-  }
-}
-
-function ErrorFallback({ error, resetErrorBoundary }) {
-  return (
-    <div className="alert-container" role="alert-container">
-      <p>Something went wrong:</p>
-      <pre>{error.message}</pre>
-      <button
-        onClick={() => {
-          window.location.reload()
-        }}
-      >
-        Try again
-      </button>
-    </div>
-  )
-}
+const Login = React.lazy(() => import('@auth/Login'))
 
 export default function Shell() {
-  const drawer = useDrawer()
-  // const navigate = useNavigate()
-
-  useEffect(() => {
-    console.log('auth$ ', auth$)
-    console.log('LoginService ', Login)
-    console.log('DashboardService ', DashboardService)
-  }, [])
-
   return (
-    <ErrorBoundary
-      FallbackComponent={ErrorFallback}
-      onReset={() => {
-        // reset the state of your app so the error doesn't happen again
-      }}
-    >
+    <ErrorBoundary key="app-root" FallbackComponent={ErrorFallback}>
       <ServiceProvider>
         <BrowserRouter>
           <Viewport>
@@ -74,9 +28,7 @@ export default function Shell() {
                       <BaseLayout>
                         <ErrorBoundary
                           FallbackComponent={ErrorFallback}
-                          onReset={() => {
-                            // reset the state of your app so the error doesn't happen again
-                          }}
+                          key="/"
                         >
                           <DashboardService />
                         </ErrorBoundary>
@@ -88,10 +40,8 @@ export default function Shell() {
                     element={
                       <BaseLayout abilities={['admin123', 'dev123']}>
                         <ErrorBoundary
+                          key="/orders"
                           FallbackComponent={ErrorFallback}
-                          onReset={() => {
-                            // reset the state of your app so the error doesn't happen again
-                          }}
                         >
                           <OrderService />
                         </ErrorBoundary>
@@ -102,7 +52,10 @@ export default function Shell() {
                     path="/nova"
                     element={
                       <BaseLayout abilities={['admin123']}>
-                        <ErrorBoundary FallbackComponent={ErrorFallback}>
+                        <ErrorBoundary
+                          FallbackComponent={ErrorFallback}
+                          key="/nova"
+                        >
                           <Iframe />
                         </ErrorBoundary>
                       </BaseLayout>

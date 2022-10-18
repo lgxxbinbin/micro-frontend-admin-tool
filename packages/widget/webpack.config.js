@@ -12,6 +12,7 @@ const stylesHandler = isProduction
   : 'style-loader'
 
 const deps = require('./package.json').dependencies
+const devDeps = require('./package.json').devDependencies
 
 const config = {
   entry: './src/index.js',
@@ -48,6 +49,10 @@ const config = {
         '@material-ui/core': {
           singleton: true,
           requiredVersion: deps['@material-ui/core'],
+        },
+        'styled-components': {
+          singleton: true,
+          requiredVersion: devDeps['@material-ui/core'],
         },
       },
     }),

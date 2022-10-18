@@ -14,6 +14,7 @@ const stylesHandler = isProduction
   : 'style-loader'
 
 const deps = require('./package.json').dependencies
+const devDeps = require('./package.json').devDependencies
 
 const OUTPUT_DIR = path.resolve(__dirname, 'docs')
 
@@ -71,9 +72,6 @@ const config = {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: 'asset',
       },
-
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
   plugins: [
@@ -81,37 +79,13 @@ const config = {
       name: 'shell',
       filename: 'shell/remoteEntry.js',
       remotes: {
-        // '@auth': 'auth@http://localhost:3000/auth/remoteEntry.js',
-
+        '@auth': 'auth@http://localhost:3000/auth/remoteEntry.js',
         '@order': 'order@http://localhost:3000/order/remoteEntry.js',
         '@dashboard':
           'dashboard@http://localhost:3000/dashboard/remoteEntry.js',
 
         '@store': 'store@http://localhost:3000/store/remoteEntry.js',
-
         '@shell': 'shell@http://localhost:3000/shell/remoteEntry.js',
-        repoAuth: `promise new Promise(resolve => {
-          const urlParams = new URLSearchParams(window.location.search)
-
-          const remoteUrlWithVersion = 'http://localhost:3000/auth/remoteEntry.js'
-          const script = document.createElement('script')
-          script.src = remoteUrlWithVersion
-          script.onload = () => {
-            const proxy = {
-              get: (request) => window.repoAuth.get(request),
-              init: (arg) => {
-                try {
-                  return window.repoAuth.init(arg)
-                } catch(e) {
-                  console.log('remote container already initialized')
-                }
-              }
-            }
-            resolve(proxy)
-          }
-          document.head.appendChild(script);
-        })
-        `,
       },
       exposes: {
         './Shell': './src/components/Shell',
@@ -130,6 +104,10 @@ const config = {
           '@material-ui/core': {
             singleton: true,
             requiredVersion: deps['@material-ui/core'],
+          },
+          'styled-components': {
+            singleton: true,
+            requiredVersion: devDeps['@material-ui/core'],
           },
         },
         './src/context/ServiceContext',

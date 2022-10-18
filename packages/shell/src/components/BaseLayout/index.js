@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import AppBar from '../AppBar'
 import AppDrawer from './../AppDrawer'
 import { useLocalStorageSync } from '../../hooks/useLocalStorageSync'
-import { auth$ } from 'repoAuth/Auth'
+import { auth$ } from '@auth/Auth'
 import useAuthCheck from '../../hooks/useAuthCheck'
 
 function useDrawer() {

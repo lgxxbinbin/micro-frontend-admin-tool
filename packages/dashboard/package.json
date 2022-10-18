@@ -5,7 +5,8 @@
     "start": "webpack-cli serve",
     "build": "webpack --mode production",
     "serve": "serve dist -p 3001",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "setup": "yarn"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
