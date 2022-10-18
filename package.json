@@ -1,16 +1,14 @@
 {
-  "name": "admin-tools",
-  "version": "1.0.0",
-  "description": "Project admin tools",
+  "description": "Admin tools",
+  "private": true,
   "scripts": {
-    "start": "lerna run --scope @shared-routing/* --parallel start",
-    "build": "lerna run --scope @shared-routing/* build",
-    "serve": "lerna run --scope @shared-routing/* --parallel serve",
-    "clean": "lerna run --scope @shared-routing/* --parallel clean"
+    "start": "lerna run --scope @micro-admin-tools-1/* --parallel start",
+    "setup": "lerna run --scope @micro-admin-tools-1/* --parallel setup",
+    "build": "lerna run --scope @micro-admin-tools-1/* build",
+    "serve": "lerna run --scope @micro-admin-tools-1/* --parallel serve",
+    "clean": "lerna run --scope @micro-admin-tools-1/* --parallel clean"
   },
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
-    "lerna": "3.22.1"
+    "lerna": "^3.22.1"
   }
 }

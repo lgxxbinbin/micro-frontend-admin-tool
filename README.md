@@ -2,27 +2,39 @@
 
 This example demos a basic host application loading remote component.
 
-- `shell` is the App Shell
+- `shell` is the App Container
 - `dashboard` - standalone application
 - `order` - standalone application
-- `sales` - standalone application
-- `profile` - standalone application
+- `auth` - standalone application
+- `store` - standalone application
+- `widget` - standalone application
 
 # Running Demo
 
 Run the following commands:
-1. `nvm use`
-2. `yarn lerna bootstrap --npm-client yarn`
-3. `yarn build`
 
-To run the applicatio, run `yarn start`. This will build all the apps `shell`, `dashboard`, `order`, `profile`, `sales` on different ports as shown below
+1. `yarn install`
+2. `yarn setup`
 
-- [localhost:3000](http://localhost:3000/) (HOST) - `shell`
-- [localhost:3001](http://localhost:3001/) (STANDALONE REMOTE) - `dashboard`
-- [localhost:3002](http://localhost:3002/) (STANDALONE REMOTE) - `order`
-- [localhost:3003](http://localhost:3003/) (STANDALONE REMOTE) - `sales`
-- [localhost:3004](http://localhost:3004/) (STANDALONE REMOTE) - `profile`
+To run the applicatio, run `yarn start`. This will build all the apps `shell`, `dashboard`, `order`, `auth`, `store`, `widget` on different ports as shown below
 
-You will notice that each of the above URLs will look exactly same. For more details [Watch this YouTube video](https://www.youtube.com/watch?v=-LNcpralkjM)
+- [localhost:6001](http://localhost:6001/) (HOST) - `shell`
+- [localhost:6100](http://localhost:6100/) (STANDALONE REMOTE) - `dashboard`
+- [localhost:6200](http://localhost:6200/) (STANDALONE REMOTE) - `order`
+- [localhost:6300](http://localhost:6300/) (STANDALONE REMOTE) - `auth`
+- [localhost:6400](http://localhost:6400/) (STANDALONE REMOTE) - `widget`
+- [localhost:6500](http://localhost:6500/) (STANDALONE REMOTE) - `store`
 
-<img src="https://ssl.google-analytics.com/collect?v=1&t=event&ec=email&ea=open&t=event&tid=UA-120967034-1&z=1589682154&cid=ae045149-9d17-0367-bbb0-11c41d92b411&dt=ModuleFederationExamples&dp=/email/AppShellSharedRoutes">
+But We use proxy to customize the domain host app to prevent CORS policy.
+Proxy using localhost:3000/ to forward all the request to others
+
+In browser open [http://localhost:3000] to enter the application with username and password:
+
+- Admin role
+  id/password: admin/123
+
+- Dev role
+  id/password: dev/123
+
+- User role
+  id/password: user/123
